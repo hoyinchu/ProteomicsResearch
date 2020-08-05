@@ -21,6 +21,13 @@ pQTL_protein_feature_matrix = pQTL_protein_df.iloc[:,2:].fillna(0).to_numpy()
 pQTL_protein_idx_lookup_path = f"{PATH_ROOT}/data_sources/pQTL/pQTL_protein_converted_idx_lookup.json"
 pQTL_protein_idx_lookup = read_json_from(pQTL_protein_idx_lookup_path)
 
+# pQTL_rna_seq_path = f"{PATH_ROOT}/data_sources/pQTL/rna_seq_shared_with_protein.csv"
+# pQTL_rna_seq_df = pd.read_csv(pQTL_rna_seq_path)
+# pQTL_rna_seq_ids = pQTL_protein_df['Uniprot_Id'].to_numpy()
+# pQTL_rna_seq_feature_matrix = pQTL_protein_df.iloc[:,2:].fillna(0).to_numpy()
+# pQTL_rna_seq_idx_lookup_path = f"{PATH_ROOT}/data_sources/pQTL/pQTL_protein_converted_idx_lookup.json"
+# pQTL_rna_seq_idx_lookup = read_json_from(pQTL_protein_idx_lookup_path)
+
 nikolai_protein_path = f"{PATH_ROOT}/data_sources/Nikolai/Proteins-processed.csv"
 nikolai_protein_df = pd.read_csv(nikolai_protein_path)
 nikolai_protein_ids = nikolai_protein_df['uniprot_id'].to_numpy()
