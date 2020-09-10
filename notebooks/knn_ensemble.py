@@ -93,8 +93,10 @@ def generate_knn_interaction_score(protein1,protein2,name_vector,embedding,looku
     protein1_neighbors,protein1_neighbor_counts = generate_link_candidates(protein1,name_vector,embedding,lookup,neighbor_size,chunk_size,sample_size,candidate_size,dist,return_all)
     protein2_neighbors,protein2_neighbor_counts = generate_link_candidates(protein2,name_vector,embedding,lookup,neighbor_size,chunk_size,sample_size,candidate_size,dist,return_all)
     score = 0
+    # print(protein1_neighbors)
+    # print(protein2_neighbors)
     if protein2 in protein1_neighbors:
-        score += protein1_neighbor_counts[np.where(protein1_neighbors == protein2)]
+        score += protein1_neighbor_counts[np.where(protein1_neighbors == protein2)][0]
     if protein1 in protein2_neighbors:
-        score += protein2_neighbor_counts[np.where(protein2_neighbors == protein1)]
-    return score/2
+        score += protein2_neighbor_counts[np.where(protein2_neighbors == protein1)][0]
+    return score

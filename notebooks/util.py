@@ -44,19 +44,24 @@ def read_json_from(path):
     return init_dict
 
 # Returns a json that contains all uniprot ids in the given protein vector
-def request_protein_info(protein_vec):
+def request_protein_info(protein_vec,timed=True):
+    if timed:
+      starttime = time.time()
     json_to_build = {}
     base_url = "https://www.ebi.ac.uk/proteins/api/proteins"
     # 100 requests per second
-    for protein in protein_vec:
+    for idx,protein in enumerate(protein_vec):
         time.sleep(0.01)
         request_url = f"{base_url}/{protein}"
         r = requests.get(request_url, headers={ "Accept" : "application/json"})
         if not r.ok:
-          r.raise_for_status()
-          sys.exit()
+          print(f"{protein} not found, skipped")
+          #r.raise_for_status()
+          continue
         responseBody = json.loads(r.text)
         json_to_build[protein] = responseBody
+        if idx%100==1 and timed:
+          calc_eta(starttime,idx,len(protein_vec))
     return json_to_build
 
 def df_to_json(df,col1='protein_1',col2='protein_2',val='appearance'):
@@ -103,6 +108,10 @@ def get_new_sampled_dataset(pos_df,pos_amount,neg_df,neg_amount):
     new_df = pd.concat([pos_df,neg_df])
     return new_df
 
+def calc_eta(start_time,cur_idx,total_idx):
+  rate = cur_idx / (time.time() - start_time)
+  eta = (total_idx-cur_idx) / rate
+  print(f"ETA: {eta} seconds")
 
 # def calc_combined_counts(proteins,candidates_1,candidates_2):
 #     assert len(proteins) == len(candidates_1) and len(candidates_1) == len(candidates_2)

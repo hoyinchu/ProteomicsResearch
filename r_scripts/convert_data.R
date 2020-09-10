@@ -2,10 +2,8 @@ library('biomaRt')
 PATH_ROOT <- "D:/Desktop/Northeastern_University/Research/Proteomics/ProteinProteinAssociation/Development"
 mart <- useDataset("hsapiens_gene_ensembl", useMart("ensembl"))
 
-pQTL_protein_path <- paste(PATH_ROOT,"data_sources","pQTL","pQTL_protein.csv",sep="/")
-# proteomeHD_df_path <- paste(PATH_ROOT,"data_sources","ProteomeHD","ProteomeHD_v1_1.csv",sep="/")
-# human_ensp_df_path <- paste(PATH_ROOT,"data_sources","StringDB","human","9606.protein.links.full.v11.0.txt",sep="/")
-df <- read.table(pQTL_protein_path,sep=",",header = TRUE)
+doc_protein_path <- paste(PATH_ROOT,"data_sources","Tissue","protein_consensus.csv",sep="/")
+df <- read.table(doc_protein_path,sep=",",header = TRUE)
 # df[c("protein1", "protein2")] <- lapply(df[c("protein1", "protein2")], function(x) gsub("9606.","",x))
 ensg_col <- df$ENSG
 #protein1_col <- df$protein1
@@ -23,9 +21,9 @@ df_joined <- merge(df,protein1_complete_no_dup,by.x="ENSG",by.y="ensembl_gene_id
 
 df_joined_no_na <- df_joined[!(df_joined$uniprotswissprot==""), ]
 
-df_joined_reordered <- df_joined[c(1,ncol(df_joined),2:(ncol(df_joined)-4))]
+df_joined_reordered <- df_joined[c(1,ncol(df_joined),2:(ncol(df_joined)-1))]
 
-write.csv(df_joined_reordered,paste(PATH_ROOT,"data_sources","pQTL","pQTL_converted.csv",sep="/"), row.names=FALSE)
+write.csv(df_joined_reordered,paste(PATH_ROOT,"data_sources","Tissue","protein_consensus_converted.csv",sep="/"), row.names=FALSE)
 
 joined_df <- merge(df,protein1_converted_list,by.x="protein1",by.y="ensembl_peptide_id")
 

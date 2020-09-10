@@ -18,13 +18,19 @@ pQTL_protein_path = f"{PATH_ROOT}/data_sources/pQTL/pQTL_protein_converted.csv"
 pQTL_protein_df = pd.read_csv(pQTL_protein_path)
 pQTL_protein_ids = pQTL_protein_df['uniprotswissprot'].to_numpy()
 pQTL_protein_feature_matrix = pQTL_protein_df.iloc[:,2:].fillna(0).to_numpy()
+pQTL_protein_feature_matrix_with_na = pQTL_protein_df.iloc[:,2:].to_numpy()
 pQTL_protein_idx_lookup_path = f"{PATH_ROOT}/data_sources/pQTL/pQTL_protein_converted_idx_lookup.json"
 pQTL_protein_idx_lookup = read_json_from(pQTL_protein_idx_lookup_path)
 
-# pQTL_rna_seq_path = f"{PATH_ROOT}/data_sources/pQTL/rna_seq_shared_with_protein.csv"
-# pQTL_rna_seq_df = pd.read_csv(pQTL_rna_seq_path)
-# pQTL_rna_seq_ids = pQTL_protein_df['Uniprot_Id'].to_numpy()
-# pQTL_rna_seq_feature_matrix = pQTL_protein_df.iloc[:,2:].fillna(0).to_numpy()
+protein_consensus_path = f"{PATH_ROOT}/data_sources/Tissue/protein_consensus_converted.csv"
+protein_consensus_df = pd.read_csv(protein_consensus_path)
+protein_consensus_ids = protein_consensus_df['uniprotswissprot'].to_numpy()
+protein_consensus_feature_matrix_with_na = protein_consensus_df.iloc[:,2:].to_numpy()
+
+pQTL_rna_seq_path = f"{PATH_ROOT}/data_sources/pQTL/rna_seq_shared_with_protein.csv"
+pQTL_rna_seq_df = pd.read_csv(pQTL_rna_seq_path)
+pQTL_rna_seq_ids = pQTL_rna_seq_df['Uniprot_Id'].to_numpy()
+pQTL_rna_seq_feature_matrix_with_na = pQTL_rna_seq_df.iloc[:,2:].to_numpy()
 # pQTL_rna_seq_idx_lookup_path = f"{PATH_ROOT}/data_sources/pQTL/pQTL_protein_converted_idx_lookup.json"
 # pQTL_rna_seq_idx_lookup = read_json_from(pQTL_protein_idx_lookup_path)
 
